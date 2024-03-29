@@ -42,3 +42,45 @@ def writing_txt(info):
     with open(file, 'a', encoding='utf-8') as data:
         data.write(
             f'Фамилия: {info[0]}\n\nИмя: {info[1]}\n\nНомер телефона: {info[2]}\n\nОписание: {info[3]}\n\n\n')
+        
+def delete_info(info):
+    """Удаляет данные из файла Phonebook.csv"""
+    file = 'Phonebook.csv'
+    try:
+        with open(file, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        with open(file, 'w', encoding='utf-8') as file:
+            for line in lines:
+                if info[0] not in line:  # Предположим, что фамилия используется для удаления
+                    file.write(line)
+        print(f'Данные с фамилией {info[0]} удалены успешно.')
+    except FileNotFoundError:
+        print('Файл Phonebook.csv не найден.')
+
+def update_info(info):
+    """Изменяет данные в файлах Phonebook.csv и Phonebook.txt"""
+    file_csv = 'Phonebook.csv'
+    file_txt = 'Phonebook.txt'
+    try:
+        with open(file_csv, 'r', encoding='utf-8') as csv_file:
+            lines = csv_file.readlines()
+        with open(file_csv, 'w', encoding='utf-8') as csv_file:
+            for line in lines:
+                if info[0] in line:  # Предположим, что фамилия используется для обновления
+                    csv_file.write(f'{info[0]};{info[1]};{info[2]};{info[3]}\n')
+                else:
+                    csv_file.write(line)
+        print(f'Данные с фамилией {info[0]} успешно изменены в файле Phonebook.csv.')
+
+        with open(file_txt, 'r', encoding='utf-8') as txt_file:
+            lines = txt_file.readlines()
+        with open(file_txt, 'w', encoding='utf-8') as txt_file:
+            for line in lines:
+                if info[0] in line:
+                    txt_file.write(
+                        f'Фамилия: {info[0]}\n\nИмя: {info[1]}\n\nНомер телефона: {info[2]}\n\nОписание: {info[3]}\n\n\n')
+                else:
+                    txt_file.write(line)
+        print(f'Данные с фамилией {info[0]} успешно изменены в файле Phonebook.txt.')
+    except FileNotFoundError:
+        print('Файл Phonebook.csv или Phonebook.txt не найден.')

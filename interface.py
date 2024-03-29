@@ -1,6 +1,6 @@
 from os.path import exists
 from scv_creating import creating
-from file_writing import writing_scv, writing_txt, get_info
+from file_writing import writing_scv, writing_txt, get_info, delete_info, update_info
 from export import from_file
 
 
@@ -15,6 +15,15 @@ def record_info():
     writing_scv(info)
     writing_txt(info)
 
+def delete_data():
+    """Удаляет данные из телефонного справочника"""
+    info = get_info()
+    delete_info(info)
+
+def update_data():
+    """Изменяет данные в телефонном справочнике"""
+    info = get_info()
+    update_info(info)
 
 def choice():
     """Предоставляет пользователю выбор продолжить работу или завершить, записать данные или вывести на экран"""
@@ -27,9 +36,13 @@ def choice():
         if not exists(path):
             creating()
 
-        choice_action = input('Введите \'да\', если хотите записать новые данные, и любой другой символ, если хотите просмотреть справочник в консоли: ')
+        choice_action = input('Введите \'да\' для записи новых данных, \'удалить\' для удаления данных, \'изменить\' для изменения данных, или любой другой символ для просмотра справочника в консоли: ')
         if choice_action.lower() == 'да':
             record_info()
+        elif choice_action.lower() == 'удалить':
+            delete_data()
+        elif choice_action.lower() == 'изменить':
+            update_data()
         else:
             view()
 
