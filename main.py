@@ -1,4 +1,4 @@
-
+from gui import choice
 import os
 
 os.system('cls')
